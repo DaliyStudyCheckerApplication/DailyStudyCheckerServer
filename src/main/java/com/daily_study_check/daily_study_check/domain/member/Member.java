@@ -3,6 +3,7 @@ package com.daily_study_check.daily_study_check.domain.member;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -32,7 +33,7 @@ public class Member {
 	@Embedded
 	private Location location;
 
-	@Enumerated
+	@Enumerated(value = EnumType.STRING)
 	private Discrimination discrimination;
 
 	@ManyToOne(fetch = FetchType.LAZY)
