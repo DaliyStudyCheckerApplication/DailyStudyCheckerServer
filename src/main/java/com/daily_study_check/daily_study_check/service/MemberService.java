@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.daily_study_check.daily_study_check.domain.check_study.CheckStudy;
 import com.daily_study_check.daily_study_check.domain.member.Member;
 import com.daily_study_check.daily_study_check.domain.team.Team;
+import com.daily_study_check.daily_study_check.repository.CheckStudyRepository;
 import com.daily_study_check.daily_study_check.repository.MemberRepository;
+import com.daily_study_check.daily_study_check.repository.RuleRepository;
+import com.daily_study_check.daily_study_check.repository.TeamRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +23,9 @@ import lombok.RequiredArgsConstructor;
 public class MemberService {
 
 	private final MemberRepository memberRepository;
+	private final RuleRepository ruleRepository;
+	private final TeamRepository teamRepository;
+	private final CheckStudyRepository checkStudyRepository;
 
 	/**
 	 * 회원가입
