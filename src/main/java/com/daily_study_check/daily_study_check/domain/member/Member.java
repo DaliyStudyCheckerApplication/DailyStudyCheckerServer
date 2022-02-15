@@ -43,4 +43,16 @@ public class Member {
 	@OneToOne
 	@JoinColumn(name = "check_id")
 	private CheckStudy checkStudy;
+
+	//생성메서드
+	public static Member createMember(String memberName, String email, String phoneNumber, Discrimination discrimination, Location location ) {
+		Member member = new Member();
+		member.setMemberName(memberName);
+		member.setEmail(email);
+		member.setPhoneNumber(phoneNumber);
+		member.setDiscrimination(discrimination);
+		member.setLocation(location);
+
+		return member;
+	}
 }

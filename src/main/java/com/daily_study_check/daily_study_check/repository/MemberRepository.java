@@ -35,7 +35,8 @@ public class MemberRepository {
 		return em.createQuery(
 			"select m "
 				+ " from Member m"
-				+ " where m.memberName=:memberName",Member.class
+				+ " where m.memberName=:memberName",
+				Member.class
 		)
 			.setParameter("memberName", memberName)
 			.getResultList();

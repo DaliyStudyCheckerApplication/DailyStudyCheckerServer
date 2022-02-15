@@ -24,4 +24,15 @@ public class Rule {
 	private int goalTime;//minute
 
 	private int amountPerPenalty;
+
+	//생성메서드
+	public static Rule createRule(boolean isLocation, LocalTime startTime, int goalTime, int amountPerPenalty) {
+		Rule rule = new Rule();
+		rule.setLocation(isLocation);
+		rule.setStartTime(startTime);
+		rule.setGoalTime(goalTime);
+		rule.setAmountPerPenalty(amountPerPenalty);
+
+		return rule;
+	}
 }
