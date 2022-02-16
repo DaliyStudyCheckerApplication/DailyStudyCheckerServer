@@ -28,6 +28,7 @@ public class CheckStudyRepository {
 			"select cs"
 				+ " from CheckStudy cs",
 			CheckStudy.class
-		).getResultList();
+		)
+			.getResultList();
 	}
 }

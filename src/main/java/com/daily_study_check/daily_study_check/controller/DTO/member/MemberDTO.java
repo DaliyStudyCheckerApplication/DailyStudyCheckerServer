@@ -1,0 +1,8 @@
+package com.daily_study_check.daily_study_check.controller.DTO.member;
+
+import lombok.Data;
+
+@Data
+public class MemberDTO {
+	private String memberName;
+}
