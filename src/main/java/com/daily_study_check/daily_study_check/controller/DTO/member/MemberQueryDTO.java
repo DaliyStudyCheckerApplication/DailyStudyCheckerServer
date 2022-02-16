@@ -9,6 +9,7 @@ import lombok.Data;
 //responseBody로 보내 줘야 함
 @Data
 public class MemberQueryDTO {
+	private Long memberId;
 	private String memberName;
 	private String locationName;
 	private String email;
@@ -19,6 +20,7 @@ public class MemberQueryDTO {
 	public MemberQueryDTO createMemberQueryDTO(Member member) {
 		Location location = new Location(member.getLocation().getX(), member.getLocation().getY(), member.getLocation().getName());
 		MemberQueryDTO memberQueryDTO = new MemberQueryDTO();
+		memberQueryDTO.setMemberId(member.getId());
 		memberQueryDTO.setMemberName(member.getMemberName());
 		memberQueryDTO.setLocationName(location.getName());
 		memberQueryDTO.setEmail(member.getEmail());

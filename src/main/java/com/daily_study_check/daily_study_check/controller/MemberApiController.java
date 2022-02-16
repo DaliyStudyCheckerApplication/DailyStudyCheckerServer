@@ -12,6 +12,7 @@ import com.daily_study_check.daily_study_check.domain.member.Member;
 import com.daily_study_check.daily_study_check.repository.MemberRepository;
 import com.daily_study_check.daily_study_check.service.MemberService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -20,15 +21,29 @@ public class MemberApiController {
 	private final MemberService memberService;
 	private final MemberRepository memberRepository;
 
+	/**
+	 * Member CRUD progressing
+	 * CREATE
+	 * READ done
+	 * UPDATE
+	 * DELETE
+	 */
+
 	@GetMapping(value = "/api/v1/members")
 	@ResponseBody
+	@ApiOperation(value = "get members")
 	public MemberQueryDTO members(@RequestParam(value = "id") Long memberId) {
 		Member member = memberRepository.findOne(memberId);
 		MemberQueryDTO memberQueryDTO = new MemberQueryDTO();
 		return memberQueryDTO.createMemberQueryDTO(member);
 	}
 
-
+	/**
+	 * MemberInfo response
+	 * main 화면에 들어갈 정보
+	 * @param userEmail
+	 * @return
+	 */
 	//TODO: make using dto
 	@GetMapping(value = "/api/v1/member_info")
 	@ResponseBody
