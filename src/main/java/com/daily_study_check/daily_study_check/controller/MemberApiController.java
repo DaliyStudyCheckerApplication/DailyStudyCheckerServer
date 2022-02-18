@@ -3,6 +3,7 @@ package com.daily_study_check.daily_study_check.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.daily_study_check.daily_study_check.controller.DTO.member.MemberQueryDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.memberInfo.MemberInfoDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.request.MemberJoinRequestDTO;
+import com.daily_study_check.daily_study_check.controller.DTO.request.MemberUpdateRequest;
 import com.daily_study_check.daily_study_check.controller.DTO.response.ResponseDTO;
 import com.daily_study_check.daily_study_check.domain.member.Discrimination;
 import com.daily_study_check.daily_study_check.domain.member.Location;
@@ -28,9 +30,9 @@ public class MemberApiController {
 
 	/**
 	 * Member CRUD progressing
-	 * CREATE
+	 * CREATE done
 	 * READ done
-	 * UPDATE
+	 * UPDATE done
 	 * DELETE
 	 */
 
@@ -42,7 +44,7 @@ public class MemberApiController {
 	 */
 	@PostMapping(value = "/api/v1/members")
 	@ResponseBody
-	public ResponseDTO join(
+	public ResponseDTO<MemberQueryDTO> join(
 		@RequestBody MemberJoinRequestDTO memberJoinRequestDTO
 	) {
 		Location location = new Location(memberJoinRequestDTO.getLocationX(), memberJoinRequestDTO.getLocationY(), memberJoinRequestDTO.getLocationName());
@@ -54,18 +56,51 @@ public class MemberApiController {
 			location
 			);
 		memberService.join(member);
-		return new ResponseDTO().createSuccessfulResponse(member);
+		return new ResponseDTO().createSuccessfulResponse(new MemberQueryDTO().createMemberQueryDTO(member));
 
 	}
 
+	/**
+	 * Member READ
+	 * 회원 정보
+	 * @param memberId
+	 * @return
+	 */
 	@GetMapping(value = "/api/v1/members")
 	@ResponseBody
 	@ApiOperation(value = "get members")
-	public ResponseDTO members(@RequestParam(value = "id") Long memberId) {
+	public ResponseDTO<MemberQueryDTO> members(
+		@RequestParam(value = "id") Long memberId
+	) {
 		Member member = memberRepository.findOne(memberId);
-		MemberQueryDTO memberQueryDTO = new MemberQueryDTO();
-		ResponseDTO responseDTO = new ResponseDTO();
-		return responseDTO.createSuccessfulResponse(memberQueryDTO.createMemberQueryDTO(member));
+		return new ResponseDTO().createSuccessfulResponse(new MemberQueryDTO().createMemberQueryDTO(member));
+	}
+
+	/**
+	 * Member UPDATE
+	 * @param memberUpdateRequest
+	 * @return
+	 */
+	@PutMapping(value = "/api/v1/members")
+	@ResponseBody
+	public ResponseDTO<MemberQueryDTO> updateMember(
+		@RequestBody MemberUpdateRequest memberUpdateRequest
+	) {
+		Location location = new Location(
+			memberUpdateRequest.getLocationX(),
+			memberUpdateRequest.getLocationY(),
+			memberUpdateRequest.getLocationName()
+		);
+		Member member = Member.createMember(
+			memberUpdateRequest.getMemberName(),
+			memberUpdateRequest.getEmail(),
+			memberUpdateRequest.getPhoneNumber(),
+			memberUpdateRequest.getDiscrimination(),
+			location
+		);
+		member.setId(memberUpdateRequest.getMemberId());
+		memberService.update(memberUpdateRequest.getMemberId(), member);
+		return new ResponseDTO().createSuccessfulResponse(new MemberQueryDTO().createMemberQueryDTO(member));
 	}
 
 	/**

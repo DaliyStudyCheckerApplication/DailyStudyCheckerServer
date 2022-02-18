@@ -1,5 +1,6 @@
 package com.daily_study_check.daily_study_check.domain.member;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -40,7 +41,7 @@ public class Member {
 	@JoinColumn(name = "team_id")
 	private Team team;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "check_id")
 	private CheckStudy checkStudy;
 

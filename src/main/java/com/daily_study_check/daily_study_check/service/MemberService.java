@@ -2,11 +2,14 @@ package com.daily_study_check.daily_study_check.service;
 
 import java.util.List;
 
+import javax.persistence.Embedded;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.daily_study_check.daily_study_check.domain.check_study.CheckStudy;
+import com.daily_study_check.daily_study_check.domain.member.Location;
 import com.daily_study_check.daily_study_check.domain.member.Member;
 import com.daily_study_check.daily_study_check.domain.team.Team;
 import com.daily_study_check.daily_study_check.repository.CheckStudyRepository;
@@ -38,6 +41,23 @@ public class MemberService {
 	@Transactional
 	public Long join(Member member) {
 		memberRepository.save(member);
+		return member.getId();
+	}
+
+	/**
+	 * 업데이트 멤버
+	 * @param memberId
+	 * @param updateMember
+	 * @return
+	 */
+	@Transactional
+	public Long update(Long memberId, Member updateMember) {
+		Member member = memberRepository.findOne(memberId);
+		member.setId(memberId);
+		member.setMemberName(updateMember.getMemberName());
+		member.setEmail(updateMember.getEmail());
+		member.setPhoneNumber(updateMember.getPhoneNumber());
+		member.setLocation(updateMember.getLocation());
 		return member.getId();
 	}
 
