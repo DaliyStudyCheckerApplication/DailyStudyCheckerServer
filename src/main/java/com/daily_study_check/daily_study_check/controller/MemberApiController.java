@@ -1,6 +1,7 @@
 package com.daily_study_check.daily_study_check.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -8,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.daily_study_check.daily_study_check.controller.DTO.member.MemberDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.member.MemberQueryDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.memberInfo.MemberInfoDTO;
+import com.daily_study_check.daily_study_check.controller.DTO.request.MemberDeleteRequestDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.request.MemberJoinRequestDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.request.MemberUpdateRequest;
 import com.daily_study_check.daily_study_check.controller.DTO.response.ResponseDTO;
@@ -104,16 +107,30 @@ public class MemberApiController {
 	}
 
 	/**
+	 * Member DELETE
+	 * @param memberDeleteRequestDTO
+	 * @return
+	 */
+	@DeleteMapping(value = "/api/v1/members")
+	@ResponseBody
+	public ResponseDTO<MemberDTO> deleteMember(
+		@RequestBody MemberDeleteRequestDTO memberDeleteRequestDTO
+	) {
+		Long deletedId = memberService.delete(memberDeleteRequestDTO.getMemberId());
+		return new ResponseDTO().createSuccessfulResponse(deletedId);
+	}
+
+	/**
 	 * MemberInfo response
 	 * main 화면에 들어갈 정보
-	 * @param userEmail
+	 * @param memberEmail
 	 * @return
 	 */
 	//TODO: make using dto
 	@GetMapping(value = "/api/v1/member_info")
 	@ResponseBody
-	public MemberInfoDTO memberInfos(@RequestParam(value = "member_email") String userEmail) {
-		Member byEmail = memberRepository.findByEmail(userEmail);
+	public MemberInfoDTO memberInfos(@RequestParam(value = "memberEmail") String memberEmail) {
+		Member byEmail = memberRepository.findByEmail(memberEmail);
 		MemberInfoDTO memberInfoDTO = new MemberInfoDTO();
 		return memberInfoDTO.createMemberInfoDTO(byEmail);
 	}

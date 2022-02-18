@@ -52,4 +52,9 @@ public class MemberRepository {
 			.setParameter("email", email)
 			.getSingleResult();
 	}
+
+	public void delete(Long memberId) {
+		Member member = em.find(Member.class, memberId);
+		em.remove(member);
+	}
 }

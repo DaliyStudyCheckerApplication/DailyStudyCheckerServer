@@ -45,7 +45,7 @@ public class MemberService {
 	}
 
 	/**
-	 * 업데이트 멤버
+	 * 멤버 업데이트
 	 * @param memberId
 	 * @param updateMember
 	 * @return
@@ -59,6 +59,17 @@ public class MemberService {
 		member.setPhoneNumber(updateMember.getPhoneNumber());
 		member.setLocation(updateMember.getLocation());
 		return member.getId();
+	}
+
+	/**
+	 * 멤버 삭제
+	 * @param memberId
+	 * @return
+	 */
+	@Transactional
+	public Long delete(Long memberId) {
+		memberRepository.delete(memberId);
+		return memberId;
 	}
 
 	/**
