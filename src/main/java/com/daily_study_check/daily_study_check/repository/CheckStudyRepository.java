@@ -31,4 +31,17 @@ public class CheckStudyRepository {
 		)
 			.getResultList();
 	}
+
+	public List<CheckStudy> findByMember(Long memberId) {
+		return em.createQuery(
+			"select cs"
+				+ " from CheckStudy cs"
+				+ " join fetch Member m"
+				+ " on m.id=:memberId",
+			CheckStudy.class
+		)
+			.setParameter("memberId", memberId)
+			.getResultList();
+	}
+
 }
