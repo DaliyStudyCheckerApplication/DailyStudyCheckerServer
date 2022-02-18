@@ -2,12 +2,17 @@ package com.daily_study_check.daily_study_check.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.daily_study_check.daily_study_check.controller.DTO.member.MemberDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.member.MemberQueryDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.memberInfo.MemberInfoDTO;
+import com.daily_study_check.daily_study_check.controller.DTO.request.MemberJoinRequestDTO;
+import com.daily_study_check.daily_study_check.controller.DTO.response.ResponseDTO;
+import com.daily_study_check.daily_study_check.domain.member.Discrimination;
+import com.daily_study_check.daily_study_check.domain.member.Location;
 import com.daily_study_check.daily_study_check.domain.member.Member;
 import com.daily_study_check.daily_study_check.repository.MemberRepository;
 import com.daily_study_check.daily_study_check.service.MemberService;
@@ -29,13 +34,38 @@ public class MemberApiController {
 	 * DELETE
 	 */
 
+	/**
+	 * Member CREATE
+	 * 회원가입
+	 * @param memberJoinRequestDTO
+	 * @return
+	 */
+	@PostMapping(value = "/api/v1/members")
+	@ResponseBody
+	public ResponseDTO join(
+		@RequestBody MemberJoinRequestDTO memberJoinRequestDTO
+	) {
+		Location location = new Location(memberJoinRequestDTO.getLocationX(), memberJoinRequestDTO.getLocationY(), memberJoinRequestDTO.getLocationName());
+		Member member = Member.createMember(
+			memberJoinRequestDTO.getMemberName(),
+			memberJoinRequestDTO.getEmail(),
+			memberJoinRequestDTO.getPhoneNumber(),
+			Discrimination.MEMBER,
+			location
+			);
+		memberService.join(member);
+		return new ResponseDTO().createSuccessfulResponse(member);
+
+	}
+
 	@GetMapping(value = "/api/v1/members")
 	@ResponseBody
 	@ApiOperation(value = "get members")
-	public MemberQueryDTO members(@RequestParam(value = "id") Long memberId) {
+	public ResponseDTO members(@RequestParam(value = "id") Long memberId) {
 		Member member = memberRepository.findOne(memberId);
 		MemberQueryDTO memberQueryDTO = new MemberQueryDTO();
-		return memberQueryDTO.createMemberQueryDTO(member);
+		ResponseDTO responseDTO = new ResponseDTO();
+		return responseDTO.createSuccessfulResponse(memberQueryDTO.createMemberQueryDTO(member));
 	}
 
 	/**
