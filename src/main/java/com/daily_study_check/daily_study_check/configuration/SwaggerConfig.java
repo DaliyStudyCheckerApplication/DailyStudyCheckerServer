@@ -19,8 +19,8 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class SwaggerConfig {
 
 	private ApiInfo swaggerInfo() {
-		return new ApiInfoBuilder().title("IoT API")
-			.description("IoT API Docs").build();
+		return new ApiInfoBuilder().title("Daily Study Checker Application APIs Definition")
+			.description("api definition").build();
 	}
 
 	@Bean
