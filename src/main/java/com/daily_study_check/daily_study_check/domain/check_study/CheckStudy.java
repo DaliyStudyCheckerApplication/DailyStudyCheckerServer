@@ -18,4 +18,14 @@ public class CheckStudy {
 	private Long id;
 	private LocalDate date;
 	private boolean ok = false;
+
+
+	//비즈니스 로직
+	public void successCheckStudy() {
+		this.ok = true;
+	}
+
+	public void failCheckStudy() {
+		this.ok = false;
+	}
 }

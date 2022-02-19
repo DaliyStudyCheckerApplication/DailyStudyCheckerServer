@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Location {
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	private String name;
 }

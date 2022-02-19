@@ -43,4 +43,14 @@ public class TeamRepository {
 			.setParameter("teamName", teamName)
 			.getResultList();
 	}
+
+	public Team findByMemberId(Long memberId) {
+		return em.createQuery(
+			"select t"
+				+ " from Team t"
+				+ " join fetch Member m"
+				+ " where m.team.id = t.id",
+			Team.class
+		).getSingleResult();
+	}
 }

@@ -35,10 +35,26 @@ public class MemberRepository {
 		return em.createQuery(
 			"select m "
 				+ " from Member m"
-				+ " where m.memberName=:memberName",Member.class
+				+ " where m.memberName=:memberName",
+				Member.class
 		)
 			.setParameter("memberName", memberName)
 			.getResultList();
+	}
 
+	public Member findByEmail(String email) {
+		return em.createQuery(
+			"select distinct m"
+				+ " from Member m"
+				+ " where m.email=:email",
+			Member.class
+		)
+			.setParameter("email", email)
+			.getSingleResult();
+	}
+
+	public void delete(Long memberId) {
+		Member member = em.find(Member.class, memberId);
+		em.remove(member);
 	}
 }
