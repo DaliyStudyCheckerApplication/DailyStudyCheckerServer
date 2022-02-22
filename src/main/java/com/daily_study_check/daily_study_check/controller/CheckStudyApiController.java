@@ -1,5 +1,9 @@
 package com.daily_study_check.daily_study_check.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,10 +29,15 @@ public class CheckStudyApiController {
 	public ResponseDTO successCheckStudyToday (
 		@RequestBody CheckStudyTodayRequestDTO checkStudyTodayRequestDTO
 	) {
-		Member member = memberRepository.findOne(checkStudyTodayRequestDTO.getMemberId());
-		CheckStudy checkStudy = new CheckStudy();
-		// checkStudy.successCheckStudy();
-		// member.setCheckStudy();
-		return null;
+		// Member member = memberRepository.findOne(
+		// 	checkStudyTodayRequestDTO.getMemberId()
+		// );
+		LocalDateTime localDateTime = LocalDateTime.now();
+		checkStudyService.successCheckStudy(
+			checkStudyTodayRequestDTO.getMemberId(),
+			localDateTime
+		);
+
+		return new ResponseDTO().createSuccessfulResponse(localDateTime);
 	}
 }

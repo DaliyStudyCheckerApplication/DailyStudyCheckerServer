@@ -1,6 +1,7 @@
 package com.daily_study_check.daily_study_check.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +21,10 @@ public class CheckStudyService {
 	private final MemberRepository memberRepository;
 
 	@Transactional
-	public Long successCheckStudy(Long memberId, LocalDate localDate) {
+	public Long successCheckStudy(Long memberId, LocalDateTime localDateTime) {
 		CheckStudy checkStudy = new CheckStudy();
 		checkStudy.successCheckStudy();
-		checkStudy.setDate(localDate);
+		checkStudy.setDateTime(localDateTime);
 
 		Member member = memberRepository.findOne(memberId);
 		member.setCheckStudy(checkStudy);
@@ -33,10 +34,10 @@ public class CheckStudyService {
 	}
 
 	@Transactional
-	public Long failCheckStudy(Long memberId, LocalDate localDate) {
+	public Long failCheckStudy(Long memberId, LocalDateTime localDateTime) {
 		CheckStudy checkStudy = new CheckStudy();
 		checkStudy.failCheckStudy();
-		checkStudy.setDate(localDate);
+		checkStudy.setDateTime(localDateTime);
 
 		Member member = memberRepository.findOne(memberId);
 		member.setCheckStudy(checkStudy);

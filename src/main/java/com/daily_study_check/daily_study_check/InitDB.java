@@ -23,6 +23,7 @@ public class InitDB {
 	@PostConstruct
 	public void init() {
 		initService.dbInit1();
+		initService.dbInit2();
 	}
 
 	@Component
@@ -52,6 +53,10 @@ public class InitDB {
 				member1
 			);
 			em.persist(team1);
+		}
+
+		public void dbInit2() {
+
 		}
 	}
 }

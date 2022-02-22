@@ -36,7 +36,7 @@ public class MemberApiController {
 	 * CREATE done
 	 * READ done
 	 * UPDATE done
-	 * DELETE
+	 * DELETE done
 	 */
 
 	/**
@@ -123,14 +123,16 @@ public class MemberApiController {
 	/**
 	 * MemberInfo response
 	 * main 화면에 들어갈 정보
-	 * @param memberEmail
+	 * @param memberId
 	 * @return
 	 */
 	//TODO: make using dto
 	@GetMapping(value = "/api/v1/member_info")
 	@ResponseBody
-	public MemberInfoDTO memberInfos(@RequestParam(value = "memberEmail") String memberEmail) {
-		Member byEmail = memberRepository.findByEmail(memberEmail);
+	public MemberInfoDTO memberInfos(
+		@RequestParam(value = "id") Long memberId
+	) {
+		Member byEmail = memberRepository.findOne(memberId);
 		MemberInfoDTO memberInfoDTO = new MemberInfoDTO();
 		return memberInfoDTO.createMemberInfoDTO(byEmail);
 	}
