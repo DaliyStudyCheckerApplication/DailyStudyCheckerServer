@@ -1,5 +1,6 @@
 package com.daily_study_check.daily_study_check.domain.rule;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import javax.persistence.Column;
@@ -34,5 +35,19 @@ public class Rule {
 		rule.setAmountPerPenalty(amountPerPenalty);
 
 		return rule;
+	}
+
+	//비즈니스 로직
+	public boolean checkIfSuccessOrFail(LocalDateTime localDateTime) {
+		LocalTime checkingTime = LocalTime.of(
+			localDateTime.getHour(),
+			localDateTime.getMinute(),
+			localDateTime.getSecond(),
+			localDateTime.getNano()
+			);
+		if (checkingTime.isBefore(getStartTime())) {
+			return true;
+		}
+		return false;
 	}
 }
