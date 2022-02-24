@@ -37,7 +37,7 @@ public class Member {
 	@Enumerated(value = EnumType.STRING)
 	private Discrimination discrimination;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "team_id")
 	private Team team;
 
@@ -56,10 +56,4 @@ public class Member {
 
 		return member;
 	}
-
-	//연관관계 메서드
-	// public void setTeam(Team team) {
-	// 	this.team = team;
-	// 	team.addMember(this);
-	// }
 }
