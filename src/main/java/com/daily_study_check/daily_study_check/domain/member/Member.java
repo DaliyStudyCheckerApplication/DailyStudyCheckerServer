@@ -56,4 +56,10 @@ public class Member {
 
 		return member;
 	}
+
+	//연관관계 메서드
+	// public void setTeam(Team team) {
+	// 	this.team = team;
+	// 	team.addMember(this);
+	// }
 }

@@ -52,7 +52,7 @@ public class Team {
 		for (Member member : members) {
 			team.addMember(member);
 		}
-		team.setMemberCount(team.getMemberCount());
+		team.setMemberCount(members.length);
 		return team;
 	}
 }

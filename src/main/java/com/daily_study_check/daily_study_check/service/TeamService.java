@@ -1,5 +1,7 @@
 package com.daily_study_check.daily_study_check.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,14 +18,21 @@ public class TeamService {
 	private final TeamRepository teamRepository;
 
 	@Transactional(readOnly = false)
-	public Long join(Team team, Member member) {
+	public Long join(Team team) {
 		teamRepository.save(team);
-		member.setTeam(team);
 		return team.getId();
 	}
 
 
-	public Team getTeam(Long teamId) {
+	public Team find(Long teamId) {
 		return teamRepository.findOne(teamId);
 	}
+
+	public Team findTeamByMemberId(Long memberId) {
+		return teamRepository.findByMemberId(memberId);
+	}
+
+	// public List<Member> findMembers(Long teamId) {
+	//
+	// }
 }

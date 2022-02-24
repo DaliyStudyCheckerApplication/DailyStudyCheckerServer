@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
 
+import com.daily_study_check.daily_study_check.domain.member.Member;
 import com.daily_study_check.daily_study_check.domain.team.Team;
 
 import lombok.RequiredArgsConstructor;
@@ -15,9 +16,8 @@ import lombok.RequiredArgsConstructor;
 public class TeamRepository {
 	private final EntityManager em;
 
-	public Long save(Team team) {
+	public void save(Team team) {
 		em.persist(team);
-		return team.getId();
 	}
 
 	public Team findOne(Long id) {
@@ -49,8 +49,19 @@ public class TeamRepository {
 			"select t"
 				+ " from Team t"
 				+ " join fetch Member m"
-				+ " where m.team.id = t.id",
+				+ " where m.team.id =:memberId",
 			Team.class
-		).getSingleResult();
+		)
+			.setParameter("memberId", memberId)
+			.getSingleResult();
 	}
+
+	// public List<Member> findAllMembers() {
+	// 	return em.createQuery(
+	// 		"select m"
+	// 			+ " from Member m "
+	// 			+ " join fetch Team t"
+	// 			+ " "
+	// 	)
+	// }
 }
