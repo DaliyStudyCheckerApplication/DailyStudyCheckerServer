@@ -56,7 +56,7 @@ public class InitDB {
 			em.persist(member3);
 			Rule rule1 = Rule.createRule(
 				true,
-				LocalTime.of(22,23),
+				LocalTime.of(01,01),
 				4,
 				4000
 			);

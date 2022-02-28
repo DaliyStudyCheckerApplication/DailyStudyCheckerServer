@@ -41,7 +41,7 @@ public class CheckStudyService {
 		Member member = memberRepository.findOne(memberId);
 		member.addCheckStudy(checkStudy);
 		checkStudyRepository.save(checkStudy);
-
+		memberRepository.save(member);
 		return checkStudy.getId();
 	}
 }
