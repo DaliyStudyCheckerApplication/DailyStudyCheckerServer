@@ -1,5 +1,8 @@
 package com.daily_study_check.daily_study_check.domain.member;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -11,8 +14,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.daily_study_check.daily_study_check.controller.DTO.memberInfo.CheckStudyInfoDTO;
 import com.daily_study_check.daily_study_check.domain.check_study.CheckStudy;
 import com.daily_study_check.daily_study_check.domain.team.Team;
 
@@ -41,9 +46,8 @@ public class Member {
 	@JoinColumn(name = "team_id")
 	private Team team;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "check_id")
-	private CheckStudy checkStudy;
+	@OneToMany(mappedBy = "member")
+	private List<CheckStudy> checkStudies = new ArrayList<>();
 
 	//생성메서드
 	public static Member createMember(String memberName, String email, String phoneNumber, Discrimination discrimination, Location location ) {
@@ -55,5 +59,10 @@ public class Member {
 		member.setLocation(location);
 
 		return member;
+	}
+
+	public void addCheckStudy(CheckStudy checkStudy) {
+		checkStudies.add(checkStudy);
+		checkStudy.setMember(this);
 	}
 }

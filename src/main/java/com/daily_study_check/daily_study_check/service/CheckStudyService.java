@@ -1,6 +1,5 @@
 package com.daily_study_check.daily_study_check.service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
@@ -27,9 +26,9 @@ public class CheckStudyService {
 		checkStudy.setDateTime(localDateTime);
 
 		Member member = memberRepository.findOne(memberId);
-		member.setCheckStudy(checkStudy);
+		member.addCheckStudy(checkStudy);
 		checkStudyRepository.save(checkStudy);
-
+		memberRepository.save(member);
 		return checkStudy.getId();
 	}
 
@@ -40,7 +39,7 @@ public class CheckStudyService {
 		checkStudy.setDateTime(localDateTime);
 
 		Member member = memberRepository.findOne(memberId);
-		member.setCheckStudy(checkStudy);
+		member.addCheckStudy(checkStudy);
 		checkStudyRepository.save(checkStudy);
 
 		return checkStudy.getId();
