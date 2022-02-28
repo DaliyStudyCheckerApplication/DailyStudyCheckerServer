@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.daily_study_check.daily_study_check.controller.DTO.response.ResponseDTO;
+import com.daily_study_check.daily_study_check.controller.DTO.team.InviteTeamQueryDTO;
+import com.daily_study_check.daily_study_check.controller.DTO.team.InviteTeamResponseDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.team.MakeTeamQueryDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.team.MakeTeamResponseDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.team.TeamQueryDTO;
@@ -30,16 +32,19 @@ public class TeamApiController {
 
 	@GetMapping("/api/v1/teams")
 	@ResponseBody
-	public ResponseDTO<TeamQueryDTO> teams (
+	public ResponseDTO teams (
 		@RequestParam(value = "id") Long teamId
 	) {
 		Team team = teamRepository.findOne(teamId);
-		return new ResponseDTO<>().createSuccessfulResponse(new TeamQueryDTO().createTeamQueryDTO(team));
+		return new ResponseDTO<>()
+			.createSuccessfulResponse(
+				new TeamQueryDTO()
+					.createTeamQueryDTO(team));
 	}
 
 	@PostMapping("/api/v1/teams")
 	@ResponseBody
-	public ResponseDTO<TeamQueryDTO> makeTeam (
+	public ResponseDTO makeTeam (
 		@RequestBody MakeTeamQueryDTO makeTeamQueryDTO
 	) {
 		Member member = memberService.find(makeTeamQueryDTO.getMemberId());
@@ -51,7 +56,7 @@ public class TeamApiController {
 			makeTeamQueryDTO.getPricePerPenalty()
 		);
 
-		String invitingCode = "invitingCode";
+		String invitingCode = teamService.generateInvitingCode();
 		Team team = Team.createTeam(
 			makeTeamQueryDTO.getTeamName(),
 			invitingCode,
@@ -59,6 +64,38 @@ public class TeamApiController {
 			member
 		);
 		Long teamId = teamService.join(team);
-		return new ResponseDTO<MakeTeamResponseDTO>().createSuccessfulResponse(new MakeTeamResponseDTO().createMakeTeamResponseDTO(teamId,invitingCode));
+		return new ResponseDTO<MakeTeamResponseDTO>()
+			.createSuccessfulResponse(
+				new MakeTeamResponseDTO()
+					.createMakeTeamResponseDTO(teamId,invitingCode));
+	}
+
+	@GetMapping("/api/v1/teams/invite")
+	@ResponseBody
+	public ResponseDTO teamsByInvitingCode (
+		@RequestParam(value = "invitingCode") String invitingCode
+	) {
+		Team team = teamService.findByInvitingCode(invitingCode);
+		return new ResponseDTO<>()
+			.createSuccessfulResponse(
+				new TeamQueryDTO()
+					.createTeamQueryDTO(team));
+	}
+
+	@PostMapping("/api/v1/teams/invite")
+	@ResponseBody
+	public ResponseDTO joinMemberInTeam (
+		@RequestBody InviteTeamQueryDTO inviteTeamQueryDTO
+	) {
+		Member member = memberService.find(inviteTeamQueryDTO.getMemberId());
+		Team team = teamService.find(inviteTeamQueryDTO.getTeamId());
+		member.setTeam(team);
+		team.addMember(member);
+		teamService.join(team);
+		return new ResponseDTO<InviteTeamResponseDTO>()
+			.createSuccessfulResponse(
+				new InviteTeamResponseDTO()
+					.createInviteTeamResponseDTO(inviteTeamQueryDTO.getMemberId(), inviteTeamQueryDTO.getTeamId())
+			);
 	}
 }

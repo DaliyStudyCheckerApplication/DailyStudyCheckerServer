@@ -11,6 +11,7 @@ import lombok.Data;
 
 @Data
 public class TeamQueryDTO {
+	private Long teamId;
 	private String teamName;
 	private int memberCount;
 	private String invitingCode;
@@ -19,6 +20,7 @@ public class TeamQueryDTO {
 
 	public TeamQueryDTO createTeamQueryDTO(Team team) {
 		TeamQueryDTO teamQueryDTO = new TeamQueryDTO();
+		teamQueryDTO.setTeamId(team.getId());
 		teamQueryDTO.setTeamName(team.getTeamName());
 		teamQueryDTO.setInvitingCode(team.getInvitingCode());
 		teamQueryDTO.setMemberCount(team.getMemberCount());

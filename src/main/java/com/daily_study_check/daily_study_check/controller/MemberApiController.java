@@ -129,11 +129,11 @@ public class MemberApiController {
 	//TODO: make using dto
 	@GetMapping(value = "/api/v1/member_info")
 	@ResponseBody
-	public MemberInfoDTO memberInfos(
+	public ResponseDTO memberInfos(
 		@RequestParam(value = "id") Long memberId
 	) {
-		Member byEmail = memberRepository.findOne(memberId);
+		Member findMember = memberRepository.findOne(memberId);
 		MemberInfoDTO memberInfoDTO = new MemberInfoDTO();
-		return memberInfoDTO.createMemberInfoDTO(byEmail);
+		return new ResponseDTO().createSuccessfulResponse(memberInfoDTO.createMemberInfoDTO(findMember));
 	}
 }

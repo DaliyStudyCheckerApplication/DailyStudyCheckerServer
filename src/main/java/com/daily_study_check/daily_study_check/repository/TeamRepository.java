@@ -16,8 +16,9 @@ import lombok.RequiredArgsConstructor;
 public class TeamRepository {
 	private final EntityManager em;
 
-	public void save(Team team) {
+	public Long save(Team team) {
 		em.persist(team);
+		return team.getId();
 	}
 
 	public Team findOne(Long id) {
@@ -54,6 +55,30 @@ public class TeamRepository {
 		)
 			.setParameter("memberId", memberId)
 			.getSingleResult();
+	}
+
+	public Team findByInvitingCode(String invitingCode) {
+		return em.createQuery(
+			"select t"
+				+ " from Team t"
+				+ " where t.invitingCode =:invitingCode",
+			Team.class
+		)
+			.setParameter("invitingCode", invitingCode)
+			.getSingleResult();
+	}
+
+	public boolean validateDuplicationOfInvitingCode(String invitingCode) {
+		Team validate = em.createQuery(
+				"select count(t.invitingCode)"
+					+ " from Team t"
+					+ " where t.invitingCode =:invitingCode"
+				, Team.class
+			)
+			.setParameter("invitingCode", invitingCode)
+			.getSingleResult();
+		if (validate == null) return true;
+		return false;
 	}
 
 	// public List<Member> findAllMembers() {

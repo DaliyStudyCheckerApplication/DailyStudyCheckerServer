@@ -43,6 +43,7 @@ public class Team {
 	public void addMember(Member member) {
 		members.add(member);
 		member.setTeam(this);
+		memberCount++;
 	}
 	//생성 메서드
 	public static Team createTeam(String teamName, String invitingCode, Rule rule, Member... members) {
