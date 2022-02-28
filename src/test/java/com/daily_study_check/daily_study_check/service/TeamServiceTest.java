@@ -97,10 +97,4 @@ class TeamServiceTest {
 		);
 	}
 
-	@Test
-	public void generateInviteCode_test() throws Exception {
-		//given
-		System.out.println(teamService.generateInvitingCode());
-	}
-
 }
