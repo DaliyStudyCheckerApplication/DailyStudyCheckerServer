@@ -34,11 +34,17 @@ public class CheckStudyApiController {
 		boolean checkingSuccessIfOrNot = false;
 		if (member.getTeam().getRule().checkIfSuccessOrFail(localDateTime)) {
 			checkingSuccessIfOrNot = true;
+			checkStudyService.successCheckStudy(
+				checkStudyTodayRequestDTO.getMemberId(),
+				localDateTime
+			);
+		} else {
+			checkStudyService.failCheckStudy(
+				checkStudyTodayRequestDTO.getMemberId(),
+				localDateTime
+			);
 		}
-		checkStudyService.successCheckStudy(
-			checkStudyTodayRequestDTO.getMemberId(),
-			localDateTime
-		);
+
 
 		return new ResponseDTO().createSuccessfulResponse(
 			new CheckStudyTodayResponseDTO()
