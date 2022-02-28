@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
 
+import com.daily_study_check.daily_study_check.domain.member.Member;
 import com.daily_study_check.daily_study_check.domain.team.Team;
 
 import lombok.RequiredArgsConstructor;
@@ -49,8 +50,43 @@ public class TeamRepository {
 			"select t"
 				+ " from Team t"
 				+ " join fetch Member m"
-				+ " where m.team.id = t.id",
+				+ " where m.team.id =:memberId",
 			Team.class
-		).getSingleResult();
+		)
+			.setParameter("memberId", memberId)
+			.getSingleResult();
 	}
+
+	public Team findByInvitingCode(String invitingCode) {
+		return em.createQuery(
+			"select t"
+				+ " from Team t"
+				+ " where t.invitingCode =:invitingCode",
+			Team.class
+		)
+			.setParameter("invitingCode", invitingCode)
+			.getSingleResult();
+	}
+
+	public boolean validateDuplicationOfInvitingCode(String invitingCode) {
+		Team validate = em.createQuery(
+				"select count(t.invitingCode)"
+					+ " from Team t"
+					+ " where t.invitingCode =:invitingCode"
+				, Team.class
+			)
+			.setParameter("invitingCode", invitingCode)
+			.getSingleResult();
+		if (validate == null) return true;
+		return false;
+	}
+
+	// public List<Member> findAllMembers() {
+	// 	return em.createQuery(
+	// 		"select m"
+	// 			+ " from Member m "
+	// 			+ " join fetch Team t"
+	// 			+ " "
+	// 	)
+	// }
 }

@@ -37,7 +37,7 @@ public class Member {
 	@Enumerated(value = EnumType.STRING)
 	private Discrimination discrimination;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "team_id")
 	private Team team;
 

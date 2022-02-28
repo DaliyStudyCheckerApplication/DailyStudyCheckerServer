@@ -1,6 +1,7 @@
 package com.daily_study_check.daily_study_check.domain.check_study;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +17,7 @@ public class CheckStudy {
 	@Id @GeneratedValue
 	@Column(name = "check_study_id")
 	private Long id;
-	private LocalDate date;
+	private LocalDateTime dateTime;
 	private boolean ok = false;
 
 

@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.daily_study_check.daily_study_check.controller.DTO.member.MemberDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.member.MemberQueryDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.memberInfo.MemberInfoDTO;
-import com.daily_study_check.daily_study_check.controller.DTO.request.MemberDeleteRequestDTO;
-import com.daily_study_check.daily_study_check.controller.DTO.request.MemberJoinRequestDTO;
-import com.daily_study_check.daily_study_check.controller.DTO.request.MemberUpdateRequest;
+import com.daily_study_check.daily_study_check.controller.DTO.member.MemberDeleteRequestDTO;
+import com.daily_study_check.daily_study_check.controller.DTO.member.MemberJoinRequestDTO;
+import com.daily_study_check.daily_study_check.controller.DTO.member.MemberUpdateRequest;
 import com.daily_study_check.daily_study_check.controller.DTO.response.ResponseDTO;
 import com.daily_study_check.daily_study_check.domain.member.Discrimination;
 import com.daily_study_check.daily_study_check.domain.member.Location;
@@ -36,7 +36,7 @@ public class MemberApiController {
 	 * CREATE done
 	 * READ done
 	 * UPDATE done
-	 * DELETE
+	 * DELETE done
 	 */
 
 	/**
@@ -123,15 +123,17 @@ public class MemberApiController {
 	/**
 	 * MemberInfo response
 	 * main 화면에 들어갈 정보
-	 * @param memberEmail
+	 * @param memberId
 	 * @return
 	 */
 	//TODO: make using dto
 	@GetMapping(value = "/api/v1/member_info")
 	@ResponseBody
-	public MemberInfoDTO memberInfos(@RequestParam(value = "memberEmail") String memberEmail) {
-		Member byEmail = memberRepository.findByEmail(memberEmail);
+	public ResponseDTO memberInfos(
+		@RequestParam(value = "id") Long memberId
+	) {
+		Member findMember = memberRepository.findOne(memberId);
 		MemberInfoDTO memberInfoDTO = new MemberInfoDTO();
-		return memberInfoDTO.createMemberInfoDTO(byEmail);
+		return new ResponseDTO().createSuccessfulResponse(memberInfoDTO.createMemberInfoDTO(findMember));
 	}
 }

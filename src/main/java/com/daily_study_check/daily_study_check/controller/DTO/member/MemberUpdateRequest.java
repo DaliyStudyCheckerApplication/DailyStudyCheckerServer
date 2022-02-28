@@ -1,4 +1,4 @@
-package com.daily_study_check.daily_study_check.controller.DTO.request;
+package com.daily_study_check.daily_study_check.controller.DTO.member;
 
 import com.daily_study_check.daily_study_check.domain.member.Discrimination;
 

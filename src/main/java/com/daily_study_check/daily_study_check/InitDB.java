@@ -23,6 +23,7 @@ public class InitDB {
 	@PostConstruct
 	public void init() {
 		initService.dbInit1();
+		initService.dbInit2();
 	}
 
 	@Component
@@ -38,9 +39,24 @@ public class InitDB {
 				Discrimination.MEMBER,
 				new Location(0, 0, "userA_location"));
 			em.persist(member1);
+			Member member2 = Member.createMember(
+				"userB",
+				"userB_email",
+				"00000000",
+				Discrimination.MEMBER,
+				new Location(0, 0, "userB_location"));
+			em.persist(member2);
+
+			Member member3 = Member.createMember(
+				"userC",
+				"userC_email",
+				"00000000",
+				Discrimination.MEMBER,
+				new Location(0, 0, "userC_location"));
+			em.persist(member3);
 			Rule rule1 = Rule.createRule(
 				true,
-				LocalTime.now(),
+				LocalTime.of(22,23),
 				4,
 				4000
 			);
@@ -49,9 +65,21 @@ public class InitDB {
 				"team1",
 				"0000",
 				rule1,
-				member1
+				member1,
+				member2,
+				member3
 			);
 			em.persist(team1);
+		}
+
+		public void dbInit2() {
+			Member member1 = Member.createMember(
+				"userMakingTeam",
+				"user_email",
+				"00000000",
+				Discrimination.MEMBER,
+				new Location(0, 0, "user_location"));
+			em.persist(member1);
 		}
 	}
 }

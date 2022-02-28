@@ -18,11 +18,11 @@ public class MemberQueryDTO {
 	private double locationY;
 
 	public MemberQueryDTO createMemberQueryDTO(Member member) {
-		Location location = new Location(member.getLocation().getX(), member.getLocation().getY(), member.getLocation().getName());
+		Location location = new Location(member.getLocation().getX(), member.getLocation().getY(), member.getLocation().getLocationName());
 		MemberQueryDTO memberQueryDTO = new MemberQueryDTO();
 		memberQueryDTO.setMemberId(member.getId());
 		memberQueryDTO.setMemberName(member.getMemberName());
-		memberQueryDTO.setLocationName(location.getName());
+		memberQueryDTO.setLocationName(location.getLocationName());
 		memberQueryDTO.setEmail(member.getEmail());
 		memberQueryDTO.setPhoneNumber(member.getPhoneNumber());
 		memberQueryDTO.setLocationX(location.getX());

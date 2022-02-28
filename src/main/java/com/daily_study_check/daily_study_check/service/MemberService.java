@@ -73,7 +73,7 @@ public class MemberService {
 	 * @param memberId
 	 * @return
 	 */
-	public Member getMemberInfos(Long memberId) {
+	public Member find(Long memberId) {
 		return memberRepository.findOne(memberId);
 	}
 
