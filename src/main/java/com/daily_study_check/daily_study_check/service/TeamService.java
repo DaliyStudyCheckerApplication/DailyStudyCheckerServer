@@ -38,9 +38,9 @@ public class TeamService {
 			int iValue = (int)(dValue *10);
 			inviteCode += iValue;
 		}
-		if (!validateDuplicateInvitingCode(inviteCode)) {
-			inviteCode = generateInvitingCode();
-		}
+		// if (!validateDuplicateInvitingCode(inviteCode)) {
+		// 	inviteCode = generateInvitingCode();
+		// }
 		return inviteCode;
 	}
 

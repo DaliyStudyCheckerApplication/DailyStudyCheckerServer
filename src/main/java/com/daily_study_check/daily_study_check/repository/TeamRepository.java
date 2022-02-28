@@ -17,7 +17,12 @@ public class TeamRepository {
 	private final EntityManager em;
 
 	public Long save(Team team) {
-		em.persist(team);
+		if (team.getId() == null) {
+			em.persist(team);
+		} else {
+			em.merge(team);
+		}
+
 		return team.getId();
 	}
 
