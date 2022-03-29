@@ -11,17 +11,19 @@ spring:
       hibernate:
         show_sql: true
         format_sql: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 logging:
   level:
     org.hibernate.SQL: debug
 
 ---
 spring:
-  profiles: dev
+  profiles:
+    active: "dev"
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/dump?characterEncoding=UTF-8&serverTimezone=UTC
-    username: hoho_for_jpa_study
+    url: jdbc:mysql://dev_database:3306/DAILY_STUDY_CHECK?characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
     password: 1234
   jpa:
     hibernate:
@@ -30,6 +32,7 @@ spring:
       hibernate:
         show_sql: true
         format_sql: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 logging:
   level:
     org.hibernate.SQL: debug
