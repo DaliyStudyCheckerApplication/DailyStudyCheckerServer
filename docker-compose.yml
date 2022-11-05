@@ -2,7 +2,7 @@ version: "3"
 services:
   dev_database:
     # 컨테이너 이름을 주고 싶다면 작성한다
-    # container_name: test_database
+    container_name: dev_database
     platform: linux/x86_64
     image: mysql:5.7
     environment:
@@ -16,6 +16,9 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+    restart: always
+    links:
+      - dev_database
     ports:
       - 8080:8080
     depends_on:

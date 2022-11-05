@@ -1,7 +1,6 @@
 FROM openjdk:11
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} app.jar
-#COPY . /daily_study_check
+RUN mkdir /app
+ADD ./build/libs/daily_study_check-0.0.1-SNAPSHOT.jar /app
 #WORKDIR /daily_study_check
 #CMD ["./gradlew", "bootRun"]
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=dev", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=dev", "/app/daily_study_check-0.0.1-SNAPSHOT.jar"]

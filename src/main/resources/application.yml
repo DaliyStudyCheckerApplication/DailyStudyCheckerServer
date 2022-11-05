@@ -1,9 +1,12 @@
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/DAILY_STUDY_CHECK?characterEncoding=UTF-8&serverTimezone=UTC
-    username: hoho_for_jpa_study
-    password: 1234
+    username: hoho
+    password: algorithm1!
   jpa:
     hibernate:
       ddl-auto: create
@@ -22,7 +25,7 @@ spring:
     active: "dev"
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://dev_database:3306/DAILY_STUDY_CHECK?characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/DAILY_STUDY_CHECK?characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: 1234
   jpa:
