@@ -23,11 +23,14 @@ logging:
 spring:
   profiles:
     active: "dev"
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/DAILY_STUDY_CHECK?characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
-    password: 1234
+    url: jdbc:mysql://daily-checker-db-instance-1.cwccnjgib03z.ap-northeast-2.rds.amazonaws.com:3306/DAILY_STUDY_CHECK?characterEncoding=UTF-8&serverTimezone=UTC
+    username: hoho
+    password: algorithm1!
   jpa:
     hibernate:
       ddl-auto: create
