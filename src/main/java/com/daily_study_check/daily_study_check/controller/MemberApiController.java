@@ -1,5 +1,8 @@
 package com.daily_study_check.daily_study_check.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,8 +11,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.daily_study_check.daily_study_check.controller.DTO.member.MemberDTO;
+import com.daily_study_check.daily_study_check.controller.DTO.member.MemberOnTimeDTO;
+import com.daily_study_check.daily_study_check.controller.DTO.member.MemberOntimeRequestDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.member.MemberQueryDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.memberInfo.MemberInfoDTO;
 import com.daily_study_check.daily_study_check.controller.DTO.member.MemberDeleteRequestDTO;
@@ -135,5 +141,23 @@ public class MemberApiController {
 		Member findMember = memberRepository.findOne(memberId);
 		MemberInfoDTO memberInfoDTO = new MemberInfoDTO();
 		return new ResponseDTO().createSuccessfulResponse(memberInfoDTO.createMemberInfoDTO(findMember));
+	}
+
+	/**
+	 * Members for Ontime
+	 * sms server 에서 요청한 정보
+	 * responsebody 에 date, send_time, check_time의 정보가 온다.
+	 * @param
+	 */
+	@PostMapping(value = "/api/v1/members/ontime")
+	@ResponseBody
+	public ResponseDTO<MemberOnTimeDTO> getMembersOntime(
+		@RequestBody MemberOntimeRequestDTO memberOntimeRequestDTO
+	) {
+		MemberOnTimeDTO memberOnTimeDTO = new MemberOnTimeDTO();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+		// LocalDateTime localSendDateTime = LocalDateTime.parse(memberOntimeRequestDTO.getSendTime(), formatter);
+		// LocalDateTime localCheckDateTime = LocalDateTime.parse(memberOntimeRequestDTO.getCheckTime(), formatter);
+		return new ResponseDTO().createSuccessfulResponse(memberOnTimeDTO.createMemberMemberOntimeRequestDTO(memberService.findByOntime(memberOntimeRequestDTO.getSendTime()), memberOntimeRequestDTO.getSendTime()));
 	}
 }

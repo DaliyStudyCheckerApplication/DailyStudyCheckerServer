@@ -7,9 +7,11 @@ import lombok.Data;
 @Data
 public class MemberDTO {
 	private String memberName;
-	public MemberDTO createMemberDTO(Member member) {
+	private String memberPhoneNumber;
+	public static MemberDTO createMemberDTO(Member member) {
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setMemberName(member.getMemberName());
+		memberDTO.setMemberPhoneNumber(member.getPhoneNumber());
 		return memberDTO;
 	}
 }

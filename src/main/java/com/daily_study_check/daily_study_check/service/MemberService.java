@@ -1,12 +1,15 @@
 package com.daily_study_check.daily_study_check.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.daily_study_check.daily_study_check.domain.member.Member;
 import com.daily_study_check.daily_study_check.repository.MemberRepository;
+import com.daily_study_check.daily_study_check.repository.RuleRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberService {
 
 	private final MemberRepository memberRepository;
+	private final RuleRepository ruleRepository;
 
 	/**
 	 * 회원가입
@@ -77,4 +81,12 @@ public class MemberService {
 		return memberRepository.findOne(memberId);
 	}
 
+	/**
+	 * ontime 회원 조회
+	 * @param localDateTime
+	 * @return
+	 */
+	public List<Member> findByOntime(String localDateTime) {
+		return ruleRepository.findByTime(localDateTime);
+	}
 }

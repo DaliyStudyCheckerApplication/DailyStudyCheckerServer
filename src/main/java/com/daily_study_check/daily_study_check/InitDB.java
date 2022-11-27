@@ -54,13 +54,79 @@ public class InitDB {
 				Discrimination.MEMBER,
 				new Location(0, 0, "userC_location"));
 			em.persist(member3);
+
+			//456
+			Member member4 = Member.createMember(
+				"userD",
+				"userD_email",
+				"00000000",
+				Discrimination.MEMBER,
+				new Location(0, 0, "userD_location"));
+			em.persist(member4);
+			Member member5 = Member.createMember(
+				"userE",
+				"userE_email",
+				"00000000",
+				Discrimination.MEMBER,
+				new Location(0, 0, "userE_location"));
+			em.persist(member5);
+
+			Member member6 = Member.createMember(
+				"userF",
+				"userF_email",
+				"00000000",
+				Discrimination.MEMBER,
+				new Location(0, 0, "userF_location"));
+			em.persist(member6);
+
+			//789
+			Member member7 = Member.createMember(
+				"userG",
+				"userG_email",
+				"00000000",
+				Discrimination.MEMBER,
+				new Location(0, 0, "userG_location"));
+			em.persist(member7);
+			Member member8 = Member.createMember(
+				"userH",
+				"userH_email",
+				"00000000",
+				Discrimination.MEMBER,
+				new Location(0, 0, "userH_location"));
+			em.persist(member8);
+
+			Member member9 = Member.createMember(
+				"userI",
+				"userI_email",
+				"00000000",
+				Discrimination.MEMBER,
+				new Location(0, 0, "userI_location"));
+			em.persist(member9);
+
+
 			Rule rule1 = Rule.createRule(
 				true,
-				LocalTime.of(01,01),
+				LocalTime.of(9,00),
 				4,
 				4000
 			);
 			em.persist(rule1);
+
+			Rule rule2 = Rule.createRule(
+				true,
+				LocalTime.of(8,30),
+				4,
+				4000
+			);
+			em.persist(rule2);
+
+			Rule rule3 = Rule.createRule(
+				true,
+				LocalTime.of(10,30),
+				4,
+				4000
+			);
+			em.persist(rule3);
 			Team team1 = Team.createTeam(
 				"team1",
 				"0000",
@@ -70,6 +136,26 @@ public class InitDB {
 				member3
 			);
 			em.persist(team1);
+
+			Team team2 = Team.createTeam(
+				"team2",
+				"0000",
+				rule2,
+				member4,
+				member5,
+				member6
+			);
+			em.persist(team2);
+
+			Team team3 = Team.createTeam(
+				"team3",
+				"0000",
+				rule3,
+				member7,
+				member8,
+				member9
+			);
+			em.persist(team3);
 		}
 
 		public void dbInit2() {

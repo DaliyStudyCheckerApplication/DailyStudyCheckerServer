@@ -1,5 +1,8 @@
 package com.daily_study_check.daily_study_check.repository;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -31,6 +34,24 @@ public class RuleRepository {
 				+ " from Rule r",
 			Rule.class
 		).getResultList();
+	}
+
+	public List<Member> findByTime(String localDateTime) {
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+		LocalTime localTime = LocalTime.parse(localDateTime, dateTimeFormatter);
+		return em.createQuery(
+			"select m"
+				+ " from Rule r"
+				+ " join Team t"
+				+ " on r.id = t.rule.id"
+				+ " and r.startTime =:dTime"
+				+ " join Member m"
+				+ " on m.team.id = t.id"
+				,
+			Member.class
+		)
+			.setParameter("dTime", localTime)
+			.getResultList();
 	}
 
 	// public Rule findRuleByMember(Member member) {
